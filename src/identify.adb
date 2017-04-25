@@ -16,7 +16,7 @@ package body Identify is
               (if Curr_Sig.Bits = 0 then
                  H
                else
-                 Shift_Right (H, Curr_Sig.Bits));
+                 Shift_Right (H, 64 - Curr_Sig.Bits));
          begin
             if Curr_Sig.Magic_Number = Treated_Header then
                Headers.Print_File_Info (Curr_Sig);
@@ -30,7 +30,7 @@ package body Identify is
    procedure Identify_File
      (Filename     : String) is
       Input_File   : Ada.Streams.Stream_Io.File_Type;
-      Input_Stream : Ada.StrEams.Stream_Io.Stream_Access;
+      Input_Stream : Ada.Streams.Stream_Io.Stream_Access;
       Num_Bytes    : Natural                := 8;
       Element      : Interfaces.Unsigned_64 := 0;
       Group_Size   : Integer                := 0;
