@@ -26,7 +26,7 @@ package Headers is
    Bz2                     : constant Unsigned_64 := 16#42_5A_68#;
    Webm                    : constant Unsigned_64 := 16#1A_45_Df_A3#;
    Psd                     : constant Unsigned_64 := 16#38_42_50_53#;
-   Fliff                   : constant Unsigned_64 := 16#46_4c_49_46#;
+   Flif                    : constant Unsigned_64 := 16#46_4c_49_46#;
    Ogg                     : constant Unsigned_64 := 16#4F_67_67_53#;
    Rpm                     : constant Unsigned_64 := 16#ed_ab_ee_db#;
    Kindle_Updater          : constant Unsigned_64 := 16#53_50_30_31#;
@@ -46,48 +46,109 @@ package Headers is
    Tar_Ustar               : constant Unsigned_64 := 16#75_73_74_61_72_20_20_00#;
    Png                     : constant Unsigned_64 := 16#89_50_4e_47_0d_0a_1a_0a#;
 
+   -- TODO
    -- Cr2           49_49_2A_00_10_00_00_00_43_52
    -- Backmike_Disk 42_41_43_4b_4d_49_4b_45_44_49_53_4b
 
-   All_File_Signatures : constant Signatures := (
+   All_File_Signatures : constant Signatures
+     := (
+         (Magic_Number => Tar_Z_Lzw,
+          Extension    => new String'("tar"),
+          Bits         => 0,
+          Offset       => 0,
+          Description  => new String'("Tar LZW archive")),
 
-                                                 (Magic_Number => Tar_Z_Lzw,
-                                                  Extension    => new String'("tar"),
-                                                  Bits         => 0,
-                                                  Offset       => 0,
-                                                  Description  => new String'("Tar LZW archive")),
+         (Magic_Number => Tar_Z_Lzh,
+          Extension    => new String'("tar"),
+          Bits         => 0,
+          Offset       => 0,
+          Description  => new String'("Tar LZH archive")),
 
-                                                 (Magic_Number => Tar_Z_Lzh,
-                                                  Extension    => new String'("tar"),
-                                                  Bits         => 0,
-                                                  Offset       => 0,
-                                                  Description  => new String'("Tar LZH archive")),
+         (Magic_Number => Bz2,
+          Extension    => new String'("bz"),
+          Bits         => 24,
+          Offset       => 0,
+          Description  => new String'("bunzip archive")),
 
-                                                 (Magic_Number => Png,
-                                                  Extension    => new String'("png"),
-                                                  Bits         => 0,
-                                                  Offset       => 0,
-                                                  Description  => new String'("PNG picture")),
+         (Magic_Number => Webm,
+          Extension    => new String'("webm"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("webm video file")),
 
-                                                 (Magic_Number => Ogg,
-                                                  Extension    => new String'("ogg"),
-                                                  Bits         => 32,
-                                                  Offset       => 0,
-                                                  Description  => new String'("Ogg audio")),
+         (Magic_Number => Psd,
+          Extension    => new String'("psd"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("adobe photoshop document")),
 
-                                                 (Magic_Number => Gif_87a,
-                                                  Extension    => new String'("gif"),
-                                                  Bits         => 48,
-                                                  Offset       => 0,
-                                                  Description  => new String'("gif picture")),
+         (Magic_Number => Flif,
+          Extension    => new String'("flif"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("free lossless image format")),
 
-                                                 (Magic_Number => Gif_89a,
-                                                  Extension    => new String'("gif"),
-                                                  Bits         => 48,
-                                                  Offset       => 0,
-                                                  Description  => new String'("gif picture"))
+         (Magic_Number => Ogg,
+          Extension    => new String'("ogg"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("Ogg audio")),
 
-                                                );
+         (Magic_Number => Rpm,
+          Extension    => new String'("rpm"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("redhat package")),
+
+         (Magic_Number => Kindle_Updater,
+          Extension    => new String'("bin"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("kindle updater")),
+
+         (Magic_Number => Palm_Calendar_Archive,
+          Extension    => new String'("dba"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("palm calendar archive")),
+
+         (Magic_Number => Palm_To_Do_Archive,
+          Extension    => new String'("dba"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("palm todo archive")),
+
+         (Magic_Number => Palm_Calendar_Archive_2,
+          Extension    => new String'("tda"),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("palm calendar archive")),
+
+         (Magic_Number => Palm_Data_File,
+          Extension    => new String'(""),
+          Bits         => 32,
+          Offset       => 0,
+          Description  => new String'("palm desktop data file (ms access format)")),
+
+         (Magic_Number => Gif_87a,
+          Extension    => new String'("gif"),
+          Bits         => 48,
+          Offset       => 0,
+          Description  => new String'("gif picture (87a)")),
+
+         (Magic_Number => Gif_89a,
+          Extension    => new String'("gif"),
+          Bits         => 48,
+          Offset       => 0,
+          Description  => new String'("gif picture (89a)")),
+
+         (Magic_Number => Png,
+          Extension    => new String'("png"),
+          Bits         => 0,
+          Offset       => 0,
+          Description  => new String'("PNG picture"))
+
+        );
 
    procedure Print_File_Info (F : File_Signature);
 end Headers;
