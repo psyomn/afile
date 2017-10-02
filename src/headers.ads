@@ -21,6 +21,7 @@ package Headers is
 
    type Magic_Bytes is array (Positive range <>) of Byte;
 
+   Dos_Executable          : constant Unsigned_64 := 16#4D_5A#;
    Tar_Z_Lzw               : constant Unsigned_64 := 16#1f_9d#; --  Compressed with Lempel-Ziv-Welch algorithm
    Tar_Z_Lzh               : constant Unsigned_64 := 16#1f_0a#; --  Compressed with LZH
    Bz2                     : constant Unsigned_64 := 16#42_5A_68#;
@@ -52,6 +53,12 @@ package Headers is
 
    All_File_Signatures : constant Signatures
      := (
+	 (Magic_Number => Dos_Executable,
+	  Extension => new String'("exe"),
+	  Bits => 16,
+	  Offset => 0,
+	  Description => new String'("MS Dos Executable")),
+
          (Magic_Number => Tar_Z_Lzw,
           Extension    => new String'("tar"),
           Bits         => 0,
