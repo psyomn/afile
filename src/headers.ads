@@ -1,7 +1,7 @@
 with Interfaces; use Interfaces;
 
 package Headers is
-
+   
    type Byte is range 0 .. 16#ff#;
 
    type String_Access is access String;
@@ -20,6 +20,10 @@ package Headers is
    type Signatures is array (Positive range <>) of File_Signature;
 
    type Magic_Bytes is array (Positive range <>) of Byte;
+
+   Zlib_No_Compression      : constant Unsigned_64 := 16#78_01#;
+   Zlib_Default_Compression : constant Unsigned_64 := 16#78_9C#;
+   Zlib_Best_Compression    : constant Unsigned_64 := 16#78_DA#;
 
    Dos_Executable          : constant Unsigned_64 := 16#4D_5A#;
    Tar_Z_Lzw               : constant Unsigned_64 := 16#1f_9d#; --  Compressed with Lempel-Ziv-Welch algorithm
@@ -53,11 +57,11 @@ package Headers is
 
    All_File_Signatures : constant Signatures
      := (
-	 (Magic_Number => Dos_Executable,
-	  Extension => new String'("exe"),
-	  Bits => 16,
-	  Offset => 0,
-	  Description => new String'("MS Dos Executable")),
+         (Magic_Number => Dos_Executable,
+          Extension => new String'("exe"),
+          Bits => 16,
+          Offset => 0,
+          Description => new String'("MS Dos Executable")),
 
          (Magic_Number => Tar_Z_Lzw,
           Extension    => new String'("tar"),
@@ -153,8 +157,25 @@ package Headers is
           Extension    => new String'("png"),
           Bits         => 0,
           Offset       => 0,
-          Description  => new String'("PNG picture"))
+          Description  => new String'("PNG picture")),
 
+         (Magic_Number => Zlib_No_Compression,
+          Extension    => new String'("zlib"),
+          Bits               => 16,
+          Offset       => 0,
+          Description  => new String'("zlib no compression")),
+
+         (Magic_Number => Zlib_Default_Compression,
+          Extension    => new String'("zlib"),
+          Bits               => 16,
+          Offset       => 0,
+          Description  => new String'("zlib default compression")),
+
+         (Magic_Number => Zlib_Best_Compression,
+          Extension    => new String'("zlib"),
+          Bits               => 16,
+          Offset       => 0,
+          Description  => new String'("zlib best compression"))
         );
 
    procedure Print_File_Info (F : File_Signature);
