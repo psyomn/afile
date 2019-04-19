@@ -22,7 +22,8 @@ project afile is
   -- Standard configurations
   for Main        use ("main.adb");
   for Source_Dirs use ("src/**");
-  for Exec_Dir    use "bin/";
+  for Exec_Dir    use "bin/" & external ("mode", "debug");
+  for Exec_Dir    use "bin/" & external ("mode", "release");
 
   -- Ignore git scm stuff
   for Ignore_Source_Sub_Dirs use (".git/");
