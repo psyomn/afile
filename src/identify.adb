@@ -11,11 +11,10 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.with Interfaces; use Interfaces;
-with Ada.Text_Io; use Ada.Text_Io;
-with Ada.Streams.Stream_Io; use Ada.Streams.Stream_Io;
-with Interfaces; use Interfaces;
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Streams.Stream_IO; use Ada.Streams.Stream_IO;
 
-with Headers;
+with Headers; use Headers;
 
 package body Identify is
    function Try (H : Unsigned_64) return Boolean is
@@ -42,34 +41,33 @@ package body Identify is
 
    procedure Identify_File
      (Filename     : String) is
-      Input_File   : Ada.Streams.Stream_Io.File_Type;
-      Input_Stream : Ada.Streams.Stream_Io.Stream_Access;
+      Input_File   : Ada.Streams.Stream_IO.File_Type;
+      Input_Stream : Ada.Streams.Stream_IO.Stream_Access;
       Num_Bytes    : Natural                := 8;
       Element      : Interfaces.Unsigned_64 := 0;
-      Group_Size   : Integer                := 0;
       U8           : Interfaces.Unsigned_8  := 0;
    begin
 
-      Ada.Streams.Stream_Io.Open (
+      Ada.Streams.Stream_IO.Open (
          Input_File,
-         Ada.Streams.Stream_Io.In_File,
+         Ada.Streams.Stream_IO.In_File,
          Filename
       );
 
-      Input_Stream := Ada.Streams.Stream_Io.Stream (Input_File);
+      Input_Stream := Ada.Streams.Stream_IO.Stream (Input_File);
 
       Get_Headers :
-      while not Ada.Streams.Stream_Io.End_Of_File (Input_File) loop
+      while not Ada.Streams.Stream_IO.End_Of_File (Input_File) loop
          Interfaces.Unsigned_8'Read (Input_Stream, U8);
 
          Element := Shift_Left (Element, 8);
          Element := Element or Interfaces.Unsigned_64 (U8);
 
          Num_Bytes := Num_Bytes - 1;
-         exit when Num_Bytes = 0;
+         exit Get_Headers when Num_Bytes = 0;
       end loop Get_Headers;
 
-      Ada.Streams.Stream_Io.Close(Input_File);
+      Ada.Streams.Stream_IO.Close (Input_File);
 
       Put (Filename & ": ");
       if Try (Element) then

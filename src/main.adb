@@ -11,17 +11,17 @@
 --  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 --  See the License for the specific language governing permissions and
 --  limitations under the License.with Interfaces; use Interfaces;
-with Ada.Text_IO; use Ada.Text_Io;
+with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Command_Line; use Ada.Command_Line;
 with Ada.Exceptions; use Ada.Exceptions;
-
-with Identify; use Identify;
+with Identify;
 
 procedure Main is
 
    Argument_Error : exception;
-   Arg_Count : Natural := Argument_Count;
+   Arg_Count : constant Natural := Argument_Count;
 
+   procedure Print_Help;
    procedure Print_Help is
    begin
       Put_Line ("usage: ");
@@ -41,10 +41,12 @@ begin
 exception
 
    when E : Argument_Error =>
-      Put_Line ("Error: " & Exception_Name (E) & ": " & Exception_Message (E));
+      Put_Line ("Error: " & Exception_Name (E) &
+                  ": " & Exception_Message (E));
       Print_Help;
 
    when E : others =>
-      Put_Line ("Unknown Error: " & Exception_Name (E) & ": " & Exception_Message (E));
+      Put_Line ("Unknown Error: " & Exception_Name (E) &
+                  ": " & Exception_Message (E));
 
 end Main;
